@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora VLSM</title>
+    <link rel="stylesheet" href="../CSS/styleVLSM.css">
+</head>
+<body>
+<section class="contenedor">
+    <h2>📡 Calculadora VLSM</h2>
+
+    <label for="ip">Dirección IP:</label>
+    <input type="text" id="ip" placeholder="Ej: 192.168.1.0">
+
+    <label for="prefijo">Prefijo de red:</label>
+    <input type="number" id="prefijo" placeholder="Ej: 24" min="1" max="32">
+
+    <label for="cantidad">Cantidad de subredes:</label>
+    <input type="number" id="cantidad" placeholder="Ej: 4" min="1">
+
+    <div id="tablaSubredes"></div>
+
+    <button onclick="calcularVLSM()">CALCULAR</button>
+
+    <div id="vlsmResultados"></div>
+</section>
+<a href="../Index.html" class="boton">Volver</a>
+
+
+<script src="../JS/calcularVLSM.js"></script>
+</body>
+</html>
