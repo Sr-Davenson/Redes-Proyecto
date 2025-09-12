@@ -114,6 +114,19 @@ function cidrToWildcard(cidr) {
   return [0,8,16,24].map(i => parseInt(wildcardBin.slice(i, i+8), 2)).join('.');
 }
 
+function redirigirExplicacion() {
+  const ip = document.getElementById("ip").value.trim();
+  const cidr = document.getElementById("cidr").value.trim();
+
+  if (!validarIP(ip) || isNaN(parseInt(cidr)) || parseInt(cidr) < 1 || parseInt(cidr) > 32) {
+    alert("⚠️ Ingresa una IP y máscara válidas para ver la explicación.");
+    return;
+  }
+
+  // Redirigir con parámetros en la URL
+  window.location.href = `explicacion.html?ip=${encodeURIComponent(ip)}&cidr=${encodeURIComponent(cidr)}`;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const ipInput = document.getElementById("ip");
   const cidrInput = document.getElementById("cidr");
