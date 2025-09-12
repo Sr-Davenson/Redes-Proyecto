@@ -81,6 +81,7 @@ function calcularVLSM() {
       necesidades.push({ id: i, hosts: valor });
     }
   }
+  
 
   necesidades.sort((a, b) => b.hosts - a.hosts);
 
@@ -136,4 +137,30 @@ function calcularVLSM() {
 
   resultados += "</table>";
   document.getElementById("vlsmResultados").innerHTML = resumen + resultados;
+}
+function verExplicacion() {
+  const ip = document.getElementById("ip").value.trim();
+  const cidrBase = parseInt(document.getElementById("prefijo").value.trim());
+  const cantidad = parseInt(document.getElementById("cantidad").value.trim());
+
+  if (!validarIP(ip) || isNaN(cidrBase) || cidrBase < 1 || cidrBase > 32 || isNaN(cantidad) || cantidad < 1) {
+    alert("⚠️ Primero completa los datos de red.");
+    return;
+  }
+
+  const necesidades = [];
+  for (let i = 1; i <= cantidad; i++) {
+    const valor = parseInt(document.getElementById(`hosts${i}`).value.trim());
+    if (!isNaN(valor) && valor > 0) {
+      necesidades.push({ id: i, hosts: valor });
+    }
+  }
+
+  localStorage.setItem("vlsmData", JSON.stringify({
+    ip,
+    cidrBase,
+    necesidades
+  }));
+
+  window.location.href = "explicacionVLSM.html";
 }
