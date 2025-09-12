@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
     prefijoInput.value = cidr;
   });
 
-  // Generar tabla dinámica de subredes
   cantidadInput.addEventListener("input", () => {
     const cantidad = parseInt(cantidadInput.value);
     tablaSubredes.innerHTML = "";
