@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora IPv4</title>
+  <link rel="stylesheet" href="../CSS/styleIndex.css">
+</head>
+<body>
+  <header>
+    <h1>📘 Calculadora IPv4</h1>
+    <p>Ingresa una dirección IP y su máscara para obtener toda la información.</p>
+  </header>
+
+  <section class="formulario">
+    <label for="ip">Dirección IP:</label>
+    <input type="text" id="ip" placeholder="Ej: 192.168.1.0">
+
+    <label for="cidr">Máscara (CIDR):</label>
+    <input type="number" id="cidr" min="1" max="32" value="24">
+
+    <button onclick="calcular()">Calcular</button>
+  </section>
+
+  <section id="resultados"></section>
+  <a href="../Index.html" class="boton">Volver</a>
+
+
+  <script src="../JS/ipv4.js"></script>
+</body>
+</html>
