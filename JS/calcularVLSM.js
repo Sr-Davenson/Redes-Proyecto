@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const cantidadInput = document.getElementById("cantidad");
   const tablaSubredes = document.getElementById("tablaSubredes");
 
-  // Autocompletar prefijo según clase de IP
   ipInput.addEventListener("input", () => {
     const ip = ipInput.value.trim();
     if (!validarIP(ip)) return;
@@ -36,12 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Validar formato IP
 function validarIP(ip) {
   return /^(\d{1,3}\.){3}\d{1,3}$/.test(ip);
 }
 
-// Detectar clase de IP
 function obtenerClase(ip) {
   const primerOcteto = parseInt(ip.split('.')[0]);
   if (primerOcteto < 128) return "A";
@@ -51,23 +48,19 @@ function obtenerClase(ip) {
   return "E";
 }
 
-// Convertir IP a binario
 function ipToBin(ip) {
   return ip.split('.').map(oct => parseInt(oct).toString(2).padStart(8, '0')).join('');
 }
 
-// Convertir binario a IP
 function binToIp(bin) {
   return [0,8,16,24].map(i => parseInt(bin.slice(i, i+8), 2)).join('.');
 }
 
-// Convertir CIDR a máscara decimal
 function cidrToDecimal(cidr) {
   const bin = "1".repeat(cidr).padEnd(32, "0");
   return bin.match(/.{1,8}/g).map(oct => parseInt(oct, 2)).join('.');
 }
 
-// Cálculo VLSM
 function calcularVLSM() {
   const ip = document.getElementById("ip").value.trim();
   const cidrBase = parseInt(document.getElementById("prefijo").value.trim());
@@ -81,7 +74,6 @@ function calcularVLSM() {
   const baseBin = ipToBin(ip).slice(0, cidrBase);
   let cursor = BigInt("0b" + baseBin.padEnd(32, '0'));
 
-  // Leer necesidades de hosts
   const necesidades = [];
   for (let i = 1; i <= cantidad; i++) {
     const valor = parseInt(document.getElementById(`hosts${i}`).value.trim());
@@ -90,10 +82,8 @@ function calcularVLSM() {
     }
   }
 
-  // Ordenar de mayor a menor
   necesidades.sort((a, b) => b.hosts - a.hosts);
 
-  // Cálculo general
   const totalHostsSolicitados = necesidades.reduce((sum, s) => sum + s.hosts, 0);
   const totalDireccionesRequeridas = totalHostsSolicitados + (2 * necesidades.length);
   const bitsDisponibles = 32 - cidrBase;

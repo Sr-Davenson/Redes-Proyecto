@@ -123,7 +123,6 @@ function redirigirExplicacion() {
     return;
   }
 
-  // Redirigir con parámetros en la URL
   window.location.href = `explicacion.html?ip=${encodeURIComponent(ip)}&cidr=${encodeURIComponent(cidr)}`;
 }
 
@@ -158,7 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!validarIP(ip)) return;
 
-    // Solo actualizar si el campo de máscara está vacío o fue autocompletado
     const cidrActual = cidrInput.value.trim();
     const claseDetectada = obtenerClase(ip);
 
@@ -167,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (claseDetectada === "B") cidrPorDefecto = 16;
     else if (claseDetectada === "C") cidrPorDefecto = 24;
 
-    // Si el campo está vacío o coincide con el valor anterior, actualiza
     if (cidrActual === "" || cidrActual === "8" || cidrActual === "16" || cidrActual === "24") {
       cidrInput.value = cidrPorDefecto;
     }

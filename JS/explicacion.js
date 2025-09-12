@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
 });
 
-// Funciones reutilizadas
 function validarIP(ip) {
     return /^(\d{1,3}\.){3}\d{1,3}$/.test(ip);
 }

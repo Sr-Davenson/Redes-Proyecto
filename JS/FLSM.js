@@ -8,7 +8,6 @@ function calcularFLSM() {
         return;
     }
 
-    // Calcular los bits de subred adicionales
     const bitsSubred = Math.ceil(Math.log2(cantidad));
     const nuevoCIDR = cidrBase + bitsSubred;
 
