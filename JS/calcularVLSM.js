@@ -164,3 +164,30 @@ function verExplicacion() {
 
   window.location.href = "explicacionVLSM.html";
 }
+async function exportarPDF() {
+  const { jsPDF } = window.jspdf;
+
+  // Seleccionamos la tabla de resultados
+  const resultados = document.getElementById("vlsmResultados");
+
+  if (!resultados || resultados.innerHTML.trim() === "") {
+    alert("Primero genera las subredes con el botón CALCULAR.");
+    return;
+  }
+
+  // Convertimos la tabla en imagen usando html2canvas
+  const canvas = await html2canvas(resultados);
+  const imgData = canvas.toDataURL("image/png");
+
+  // Creamos el PDF
+  const pdf = new jsPDF("p", "mm", "a4");
+  const pageWidth = pdf.internal.pageSize.getWidth();
+
+  const imgWidth = pageWidth - 20;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+
+  pdf.save("subredes_vlsm.pdf");
+}
+
