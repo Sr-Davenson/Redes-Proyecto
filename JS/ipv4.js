@@ -1,10 +1,25 @@
 function calcular() {
   const ip = document.getElementById("ip").value.trim();
-  const cidr = parseInt(document.getElementById("cidr").value);
-  const resultados = document.getElementById("resultados");
+  const cidrInput = document.getElementById("cidr").value.trim();
+  let cidr = parseInt(cidrInput);
 
-  if (!validarIP(ip) || cidr < 1 || cidr > 32) {
-    resultados.innerHTML = "<p>⚠️ IP o máscara inválida.</p>";
+  if (!validarIP(ip)) {
+    document.getElementById("resultados").innerHTML = "<p>⚠️ IP inválida.</p>";
+    return;
+  }
+
+  // Si el campo está vacío o no es un número válido, asignar según clase
+  if (cidrInput === "" || isNaN(cidr)) {
+    const claseDetectada = obtenerClase(ip);
+    if (claseDetectada === "A") cidr = 8;
+    else if (claseDetectada === "B") cidr = 16;
+    else if (claseDetectada === "C") cidr = 24;
+    else cidr = 24; // por defecto para clases D/E
+    document.getElementById("cidr").value = cidr; // actualizar visualmente
+  }
+
+  if (cidr < 1 || cidr > 32) {
+    document.getElementById("resultados").innerHTML = "<p>⚠️ Máscara inválida.</p>";
     return;
   }
 
@@ -98,3 +113,50 @@ function cidrToWildcard(cidr) {
   const wildcardBin = bin.split('').map(b => b === '1' ? '0' : '1').join('');
   return [0,8,16,24].map(i => parseInt(wildcardBin.slice(i, i+8), 2)).join('.');
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const ipInput = document.getElementById("ip");
+  const cidrInput = document.getElementById("cidr");
+
+  ipInput.addEventListener("blur", () => {
+    const ip = ipInput.value.trim();
+    const cidrActual = cidrInput.value.trim();
+
+    if (!validarIP(ip)) return;
+
+    // Solo autocompletar si el campo está vacío
+    if (cidrActual === "") {
+      const clase = obtenerClase(ip);
+      let cidrPorDefecto = 24;
+      if (clase === "A") cidrPorDefecto = 8;
+      else if (clase === "B") cidrPorDefecto = 16;
+      else if (clase === "C") cidrPorDefecto = 24;
+
+      cidrInput.value = cidrPorDefecto;
+    }
+  });
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const ipInput = document.getElementById("ip");
+  const cidrInput = document.getElementById("cidr");
+
+  ipInput.addEventListener("input", () => {
+    const ip = ipInput.value.trim();
+
+    if (!validarIP(ip)) return;
+
+    // Solo actualizar si el campo de máscara está vacío o fue autocompletado
+    const cidrActual = cidrInput.value.trim();
+    const claseDetectada = obtenerClase(ip);
+
+    let cidrPorDefecto = 24;
+    if (claseDetectada === "A") cidrPorDefecto = 8;
+    else if (claseDetectada === "B") cidrPorDefecto = 16;
+    else if (claseDetectada === "C") cidrPorDefecto = 24;
+
+    // Si el campo está vacío o coincide con el valor anterior, actualiza
+    if (cidrActual === "" || cidrActual === "8" || cidrActual === "16" || cidrActual === "24") {
+      cidrInput.value = cidrPorDefecto;
+    }
+  });
+});
