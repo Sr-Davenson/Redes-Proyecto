@@ -1,10 +1,15 @@
 function calcular() {
   const ip = document.getElementById("ip").value.trim();
   const cidrInput = document.getElementById("cidr").value.trim();
+  const resultados = document.getElementById("resultados");
   let cidr = parseInt(cidrInput);
 
+  // Ocultar resultados al iniciar
+  resultados.style.display = "none";
+
   if (!validarIP(ip)) {
-    document.getElementById("resultados").innerHTML = "<p>⚠️ IP inválida.</p>";
+    resultados.innerHTML = "<p>⚠️ IP inválida.</p>";
+    resultados.style.display = "block";
     return;
   }
 
@@ -19,7 +24,8 @@ function calcular() {
   }
 
   if (cidr < 1 || cidr > 32) {
-    document.getElementById("resultados").innerHTML = "<p>⚠️ Máscara inválida.</p>";
+    resultados.innerHTML = "<p>⚠️ Máscara inválida.</p>";
+    resultados.style.display = "block";
     return;
   }
 
@@ -37,21 +43,24 @@ function calcular() {
   const tipo = esPrivada(ip) ? "Privada" : "Pública";
 
   resultados.innerHTML = `
-  <h3>Resultados</h3>
-  <table>
-    <tr><td><strong>Dirección IPv4:</strong></td><td>${ip}</td></tr>
-    <tr><td><strong>Máscara de red:</strong></td><td>${cidrToDecimal(cidr)}</td></tr>
-    <tr><td><strong>Máscara Wildcard:</strong></td><td>${cidrToWildcard(cidr)}</td></tr>
-    <tr><td><strong>Dirección de red:</strong></td><td>${network}</td></tr>
-    <tr><td><strong>Dirección del primer host:</strong></td><td>${firstHost}</td></tr>
-    <tr><td><strong>Dirección del último host:</strong></td><td>${lastHost}</td></tr>
-    <tr><td><strong>Dirección de difusión:</strong></td><td>${broadcast}</td></tr>
-    <tr><td><strong>Número de direcciones asignables:</strong></td><td>${totalHosts}</td></tr>
-    <tr><td><strong>Tipo de dirección IPv4:</strong></td><td>${tipo}, Clase ${clase}</td></tr>
-  </table>
-  ${visualizarBinario(ipBin, cidr, "IP en Binario")}
-  ${visualizarBinario(maskBin, cidr, "Máscara en Binario")}
-`;
+    <h3>Resultados</h3>
+    <table>
+      <tr><td><strong>Dirección IPv4:</strong></td><td>${ip}</td></tr>
+      <tr><td><strong>Máscara de red:</strong></td><td>${cidrToDecimal(cidr)}</td></tr>
+      <tr><td><strong>Máscara Wildcard:</strong></td><td>${cidrToWildcard(cidr)}</td></tr>
+      <tr><td><strong>Dirección de red:</strong></td><td>${network}</td></tr>
+      <tr><td><strong>Dirección del primer host:</strong></td><td>${firstHost}</td></tr>
+      <tr><td><strong>Dirección del último host:</strong></td><td>${lastHost}</td></tr>
+      <tr><td><strong>Dirección de difusión:</strong></td><td>${broadcast}</td></tr>
+      <tr><td><strong>Número de direcciones asignables:</strong></td><td>${totalHosts}</td></tr>
+      <tr><td><strong>Tipo de dirección IPv4:</strong></td><td>${tipo}, Clase ${clase}</td></tr>
+    </table>
+    ${visualizarBinario(ipBin, cidr, "IP en Binario")}
+    ${visualizarBinario(maskBin, cidr, "Máscara en Binario")}
+  `;
+
+  // Mostrar resultados solo si se generó contenido válido
+  resultados.style.display = "block";
 }
 
 function validarIP(ip) {
@@ -170,3 +179,60 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const body = document.body;
+  const botonTema = document.getElementById("toggle-tema");
+  const iconoTema = document.getElementById("icono-tema");
+
+  const iconos = {
+    oscuro: {
+      normal: "../Recuorse/light_mode.png",
+      hover: "../Recuorse/light_mode.png"
+    },
+    claro: {
+      normal: "../Recuorse/dark_mode.png",
+      hover: "../Recuorse/dark_mode.png"
+    }
+  };
+
+  // Cargar tema guardado
+  const temaGuardado = localStorage.getItem("tema");
+  if (temaGuardado === "modo-claro") {
+    body.classList.add("modo-claro");
+    iconoTema.src = iconos.claro.normal;
+  } else {
+    body.classList.add("modo-oscuro");
+    iconoTema.src = iconos.oscuro.normal;
+  }
+
+  // Alternar tema al hacer clic
+  botonTema.addEventListener("click", () => {
+    if (body.classList.contains("modo-oscuro")) {
+      body.classList.replace("modo-oscuro", "modo-claro");
+      localStorage.setItem("tema", "modo-claro");
+      iconoTema.src = iconos.claro.normal;
+    } else {
+      body.classList.replace("modo-claro", "modo-oscuro");
+      localStorage.setItem("tema", "modo-oscuro");
+      iconoTema.src = iconos.oscuro.normal;
+    }
+  });
+
+  // Hover dinámico
+  botonTema.addEventListener("mouseenter", () => {
+    if (body.classList.contains("modo-oscuro")) {
+      iconoTema.src = iconos.oscuro.hover;
+    } else {
+      iconoTema.src = iconos.claro.hover;
+    }
+  });
+
+  botonTema.addEventListener("mouseleave", () => {
+    if (body.classList.contains("modo-oscuro")) {
+      iconoTema.src = iconos.oscuro.normal;
+    } else {
+      iconoTema.src = iconos.claro.normal;
+    }
+  });
+}); 

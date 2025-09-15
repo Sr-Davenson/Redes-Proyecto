@@ -7,32 +7,73 @@
   <link rel="stylesheet" href="CSS/styleIndex.css">
 </head>
 <body>
-  <header>
-    <h1>Calculadoras IP</h1>
-    <p>Selecciona una herramienta para comenzar</p>
-  </header>
+
+  <div class="menu">
+  <div class="branding">
+    <a href="index.html">
+      <img src="Recuorse/Icon2.ico" alt="Logo">
+    </a>
+    <div class="texto-logo">Calculadora IPv4, VLSM y FLSM</div>
+  </div>
+  <div class="botonInicio">
+    <a href="index.html">Inicio</a>
+    <a href="views/ipv4.html">Calculadora IP</a>
+    <a href="views/flsm.html">FLSM</a>
+    <a href="views/vlsm.html">VLSM</a>
+   <button id="toggle-tema" class="boton-tema">
+    <img id="icono-tema" src="Recuorse/dark_mode.png" alt="Cambiar tema" style="height: 24px; width: 24px;">
+  </button>
+  </div>
+</div>
 
   <main class="contenedor">
     <div class="card">
-      <img src="ipv4-icon.png" alt="IPv4" class="icono">
+      <img src="Recuorse/Icon2.ico" alt="IPv4" class="icono">
       <h2>Calculadora IPv4</h2>
       <p>Utiliza esta sencilla calculadora para obtener toda la información de una dirección IPv4.</p>
       <a href="views/ipv4.html" class="boton">IR A LA CALCULADORA</a>
     </div>
-
     <div class="card">
-      <img src="flsm-icon.png" alt="FLSM" class="icono">
+      <img src="Recuorse/dark_mode.png" alt="FLSM" class="icono">
       <h2>Calculadora FLSM</h2>
       <p>Obtén subredes FLSM y descarga los resultados en PDF.</p>
       <a href="views/flsm.html" class="boton">IR A LA CALCULADORA</a>
     </div>
 
     <div class="card">
-      <img src="vlsm-icon.png" alt="VLSM" class="icono">
+      <img src="Recuorse/light_mode.png" alt="VLSM" class="icono">
       <h2>Calculadora VLSM</h2>
       <p>Obtén subredes VLSM y descarga los resultados en PDF.</p>
       <a href="views/vlsm.html" class="boton">IR A LA CALCULADORA</a>
     </div>
   </main>
+
+<script>
+  const body = document.body;
+  const botonTema = document.getElementById('toggle-tema');
+  const iconoTema = document.getElementById('icono-tema');
+
+  // Cargar preferencia guardada
+  const temaGuardado = localStorage.getItem('tema');
+  if (temaGuardado === 'modo-claro') {
+    body.classList.add('modo-claro');
+    iconoTema.src = 'Recuorse/dark_mode.png'; 
+  } else {
+    body.classList.add('modo-oscuro');
+    iconoTema.src = 'Recuorse/light_mode.png'; 
+  }
+
+  botonTema.addEventListener('click', () => {
+    if (body.classList.contains('modo-oscuro')) {
+      body.classList.replace('modo-oscuro', 'modo-claro');
+      localStorage.setItem('tema', 'modo-claro');
+      iconoTema.src = 'Recuorse/dark_mode.png';
+    } else {
+      body.classList.replace('modo-claro', 'modo-oscuro');
+      localStorage.setItem('tema', 'modo-oscuro');
+      iconoTema.src = 'Recuorse/light_mode.png';
+    }
+  });
+</script>
 </body>
 </html>
