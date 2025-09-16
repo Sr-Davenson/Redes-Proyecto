@@ -1,0 +1,71 @@
+/* Estilos exclusivos para la explicación de FLSM */
+.explicacion-flsm {
+  font-family: Arial, sans-serif;
+  margin: 18px;
+  background: #f4f6f9;
+  color: #222;
+}
+
+.explicacion-flsm .contenedor {
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  max-width: 900px;
+  margin: auto;
+}
+
+.explicacion-flsm h2 {
+  color: #0b5ed7;
+  margin-top: 0;
+}
+
+.explicacion-flsm .paso {
+  background: #f9fbff;
+  border-left: 4px solid #0b5ed7;
+  padding: 14px;
+  margin-bottom: 14px;
+  border-radius: 6px;
+}
+
+.explicacion-flsm .formula {
+  font-family: monospace;
+  background: #f1f3f5;
+  padding: 8px;
+  border-radius: 6px;
+  display: block;
+  margin: 8px 0;
+}
+
+.explicacion-flsm .nota {
+  font-size: 0.95rem;
+  color: #444;
+  margin-top: 6px;
+}
+
+.explicacion-flsm pre.bin {
+  background: #111;
+  color: #aaf;
+  padding: 10px;
+  border-radius: 6px;
+  overflow: auto;
+  font-family: monospace;
+}
+
+.explicacion-flsm .boton {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 8px 12px;
+  background: #0b5ed7;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.explicacion-flsm ul {
+  margin: 8px 0 12px 20px;
+}
+
+.explicacion-flsm strong {
+  color: #0b3b82;
+}
