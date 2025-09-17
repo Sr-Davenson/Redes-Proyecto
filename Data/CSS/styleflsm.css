@@ -1,54 +1,238 @@
+/* RESET GENERAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background: #f4f6f9;
+  font-family: Arial, 'Segoe UI', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
-h2 {
-    color: #2c3e50;
+
+/* ===========================
+   🌕 MODO CLARO
+   =========================== */
+body.modo-claro {
+  background-color: #f4f6f9;
+  color: #2c3e50;
 }
+
+body.modo-claro .contenedor {
+  background-color: #fff;
+  color: #2c3e50;
+  border: 1px solid #ccc;
+}
+
+body.modo-claro input {
+  background-color: #fff;
+  color: #2c3e50;
+  border: 1px solid #ccc;
+}
+
+body.modo-claro table {
+  background-color: #fff;
+  color: #2c3e50;
+  border-color: #ddd;
+}
+
+body.modo-claro th {
+  background-color: #3498db;
+  color: white;
+}
+
+body.modo-claro tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* ===========================
+   🌓 MODO OSCURO
+   =========================== */
+body.modo-oscuro {
+  background-color: #2c3e50;
+  color: #E0E0E0;
+}
+
+body.modo-oscuro .contenedor {
+  background-color: #1C1C1C;
+  color: #E0E0E0;
+  border: 1px solid #444;
+}
+
+body.modo-oscuro input {
+  background-color: #2c3e50;
+  color: #fff;
+  border: 1px solid #666;
+}
+
+body.modo-oscuro table {
+  background-color: #1C1C1C;
+  color: #E0E0E0;
+  border-color: #444;
+}
+
+body.modo-oscuro th {
+  background-color: #3498db;
+  color: white;
+}
+
+body.modo-oscuro tr:nth-child(even) {
+  background-color: #34495e;
+}
+
+/* ===========================
+   MENÚ SUPERIOR
+   =========================== */
+.menu {
+  width: 100vw;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  border-bottom-right-radius: 300px;
+  border-bottom-left-radius: 300px;
+  background: linear-gradient(90deg, #737373, #79bcc3, #1ce1e8);
+}
+
+body.modo-oscuro .menu {
+  background: linear-gradient(90deg, #000000, #1A1A1A, #1ce1e8);
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.branding img {
+  width: 50px;
+  height: auto;
+  transition: transform 0.3s ease-in-out, filter 0.3s ease;
+}
+
+.branding img:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2) contrast(1.1);
+}
+
+.texto-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.botonInicio {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.botonInicio a {
+  text-decoration: none;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: inherit;
+}
+
+.botonInicio a:hover {
+  background-color: rgba(0,0,0,0.1);
+  border-color: currentColor;
+}
+
+.boton-tema {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.boton-tema:hover {
+  transform: scale(1.5);
+}
+
+.boton-tema img {
+  height: 24px;
+  width: 24px;
+  transition: transform 0.3s ease;
+}
+
+.boton-tema img:hover {
+  transform: scale(1.1);
+}
+
+/* ===========================
+   CONTENIDO PRINCIPAL
+   =========================== */
 .contenedor {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    max-width: 700px;
-    margin: auto;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-sizing: border-box;
 }
+
+h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 label {
-    font-weight: bold;
-    display: block;
-    margin-top: 10px;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
 }
+
 input, button {
-    padding: 8px;
-    margin-top: 5px;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  padding: 8px;
+  margin-top: 5px;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 1rem;
 }
+
 button {
-    background: #3498db;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+  background: #3498db;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
 }
+
 button:hover {
-    background: #2980b9;
+  background: #2980b9;
 }
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 1rem;
 }
+
 th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
+  border: 1px solid;
+  padding: 8px;
+  text-align: center;
+  word-wrap: break-word;
 }
-th {
-    background: #3498db;
-    color: white;
-}
-tr:nth-child(even) {
-    background: #f9f9f9;
+
+@media (max-width: 768px) {
+  .contenedor {
+    padding: 15px;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+
+  button {
+    width: 100%;
+  }
 }

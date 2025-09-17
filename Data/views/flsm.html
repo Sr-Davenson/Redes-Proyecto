@@ -7,6 +7,27 @@
   <link rel="icon" type="image/x-icon" href="../Recuorse/Icon2.ico">
 </head>
 <body>
+<<<<<<< HEAD
+=======
+  <div class="menu">
+    <div class="branding">
+      <a href="../index.html">
+        <img src="../Recuorse/Icon2.ico" alt="Logo">
+      </a>
+      <div class="texto-logo">Calculadora IPv4, VLSM y FLSM</div>
+    </div>
+    <div class="botonInicio">
+      <a href="../index.html">Inicio</a>
+      <a href="ipv4.html">Calculadora IP</a>
+      <a href="flsm.html">FLSM</a>
+      <a href="vlsm.html">VLSM</a>
+      <button id="toggle-tema" class="boton-tema">
+        <img id="icono-tema" src="../Recuorse/dark_mode.png" alt="Cambiar tema">
+      </button>
+    </div>
+  </div>
+
+>>>>>>> 60d88201c52b9cc2c04bada8253bc63e2214ee7a
   <section class="contenedor">
     <h2>📡 Calculadora FLSM</h2>
 
@@ -19,6 +40,7 @@
     <label for="cantidad">Cantidad de subredes:</label>
     <input type="number" id="cantidad" placeholder="Ej: 4" min="1">
 
+<<<<<<< HEAD
     <div id="flsmResultados" style="margin-top:16px;"></div>
 
     <button type="button" onclick="calcularFLSM()">CALCULAR</button>
@@ -44,6 +66,67 @@
       }
       window.location.href = "explicacionFlsm.html";
     }
+=======
+    <button onclick="calcularFLSM()" class="boton">CALCULAR</button>
+
+    <div id="tablaSubredes"></div>
+    <div id="flsmResultados"></div>
+  </section>
+
+  <a href="../index.html" class="boton">Volver</a>
+
+  <script src="../JS/FLSM.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const body = document.body;
+      const botonTema = document.getElementById("toggle-tema");
+      const iconoTema = document.getElementById("icono-tema");
+
+      const iconos = {
+        oscuro: {
+          normal: "../Recuorse/light_mode.png",
+          hover: "../Recuorse/light_mode.png"
+        },
+        claro: {
+          normal: "../Recuorse/dark_mode.png",
+          hover: "../Recuorse/dark_mode.png"
+        }
+      };
+
+      const temaGuardado = localStorage.getItem("tema");
+      if (temaGuardado === "modo-claro") {
+        body.classList.add("modo-claro");
+        iconoTema.src = iconos.claro.normal;
+      } else {
+        body.classList.add("modo-oscuro");
+        iconoTema.src = iconos.oscuro.normal;
+      }
+
+      botonTema.addEventListener("click", () => {
+        if (body.classList.contains("modo-oscuro")) {
+          body.classList.replace("modo-oscuro", "modo-claro");
+          localStorage.setItem("tema", "modo-claro");
+          iconoTema.src = iconos.claro.normal;
+        } else {
+          body.classList.replace("modo-claro", "modo-oscuro");
+          localStorage.setItem("tema", "modo-oscuro");
+          iconoTema.src = iconos.oscuro.normal;
+        }
+      });
+
+      botonTema.addEventListener("mouseenter", () => {
+        iconoTema.src = body.classList.contains("modo-oscuro")
+          ? iconos.oscuro.hover
+          : iconos.claro.hover;
+      });
+
+      botonTema.addEventListener("mouseleave", () => {
+        iconoTema.src = body.classList.contains("modo-oscuro")
+          ? iconos.oscuro.normal
+          : iconos.claro.normal;
+      });
+    });
+>>>>>>> 60d88201c52b9cc2c04bada8253bc63e2214ee7a
   </script>
 </body>
 </html>
