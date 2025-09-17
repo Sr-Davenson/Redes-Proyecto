@@ -1,4 +1,3 @@
-// FLSM.js - cálculo y guardado para explicación
 document.addEventListener("DOMContentLoaded", () => {
   const ipInput = document.getElementById("ip");
   const prefijoInput = document.getElementById("prefijo");
@@ -53,7 +52,6 @@ function cidrToDecimal(cidr) {
             .join('.');
 }
 
-// ✅ Función principal para calcular FLSM
 function calcularFLSM() {
   const ip = document.getElementById("ip").value.trim();
   const cidrBase = parseInt(document.getElementById("prefijo").value.trim(), 10);
@@ -64,7 +62,6 @@ function calcularFLSM() {
     return;
   }
 
-  // 1) Cálculos FLSM
   const bitsSubred = Math.ceil(Math.log2(cantidad));
   const nuevoCIDR = cidrBase + bitsSubred;
   const bitsHost = 32 - nuevoCIDR;
@@ -73,7 +70,6 @@ function calcularFLSM() {
   const hostsPorSubred = direccionesPorBloque - 2;
   const mascaraDecimal = cidrToDecimal(nuevoCIDR);
 
-  // 2) Generar subredes
   const ipBaseBin = ipToBin(ip).slice(0, cidrBase).padEnd(32, "0");
   let cursor = BigInt("0b" + ipBaseBin);
 
@@ -141,10 +137,8 @@ function calcularFLSM() {
 
   resultadosHtml += "</table>";
 
-  // 3) Mostrar resultados en la página
   document.getElementById("flsmResultados").innerHTML = resumenHtml + resultadosHtml;
 
-  // 4) Guardar datos para explicación
   const flsmDatos = {
     ip,
     cidrBase,
@@ -159,14 +153,12 @@ function calcularFLSM() {
   };
   localStorage.setItem("flsmDatos", JSON.stringify(flsmDatos));
 
-  // 5) Mostrar botón PDF
   const btnPdf = document.getElementById("btn-pdf");
   if (btnPdf) {
     btnPdf.style.display = "inline-block";
   }
 }
 
-// ✅ Descargar PDF con estilos (html2canvas + jsPDF)
 document.addEventListener("DOMContentLoaded", () => {
   const btnPdf = document.getElementById("btn-pdf");
   if (!btnPdf) return;

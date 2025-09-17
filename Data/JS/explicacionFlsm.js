@@ -1,16 +1,12 @@
-// explicacionFlsm.js
-// Lee "flsmDatos" desde localStorage (guardado por FLSM.js) y genera una explicación estilo VLSM
 document.addEventListener("DOMContentLoaded", () => {
   const cont = document.getElementById("explicacion");
-  const raw = localStorage.getItem("flsmDatos"); // **debe** coincidir con la clave usada en calcularFLSM()
+  const raw = localStorage.getItem("flsmDatos"); 
   if (!raw) {
     cont.innerHTML = `<div class="paso"><strong>No hay datos de FLSM.</strong><br>Primero presiona <em>CALCULAR</em> en la calculadora FLSM y luego vuelve aquí.</div>`;
     return;
   }
 
   const data = JSON.parse(raw);
-  // campos esperados en flsmDatos:
-  // { ip, cidrBase, cantidad, bitsSubred, nuevoCIDR, bitsHost, direccionesPorBloque, hostsPorSubred, mascaraDecimal, subredes }
   const {
     ip,
     cidrBase,
@@ -24,17 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
     subredes
   } = data;
 
-  // convertimos direccionesPorBloque (string) a BigInt para mostrar o hacer operaciones seguras
   let direcBig;
   try { direcBig = BigInt(direccionesPorBloque); } catch(e) { direcBig = BigInt(0); }
 
-  // ejemplo: primera subred (si existe)
   const ejemplo = (subredes && subredes.length) ? subredes[0] : null;
 
-  // Construcción del HTML (estilo detallado como VLSM)
   let html = '';
 
-  // 1. Datos iniciales
   html += `
     <div class="paso">
       <h3>🔹 Datos iniciales</h3>
@@ -47,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 
-  // 2. Cálculo de bits de subred (n)
   html += `
     <div class="paso">
       <h3>1️⃣ Cálculo del número de bits de subred (n)</h3>
@@ -59,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 
-  // 3. Nuevo prefijo
   html += `
     <div class="paso">
       <h3>2️⃣ Nuevo prefijo (CIDR)</h3>
@@ -69,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 
-  // 4. Máscara decimal
   html += `
     <div class="paso">
       <h3>3️⃣ Máscara de subred (decimal)</h3>
@@ -79,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 
-  // 5. Bits host y hosts por subred
   html += `
     <div class="paso">
       <h3>4️⃣ Bits para hosts y hosts por subred</h3>
@@ -94,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 
-  // 6. Salto y cómo se generan las subredes
   html += `
     <div class="paso">
       <h3>5️⃣ Salto de red y generación de subredes</h3>
@@ -104,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 
-  // 7. Ejemplo detallado con Subred 1 (binario + decimal) — si está disponible
   if (ejemplo) {
     const netBin = ejemplo.networkBin || '';
     const bcastBin = ejemplo.broadcastBin || '';
@@ -130,7 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
     html += `<div class="paso"><p>No hay subredes calculadas para mostrar un ejemplo. Primero presiona <strong>CALCULAR</strong> en la calculadora FLSM.</p></div>`;
   }
 
-  // 8. Conclusión e interpretación
   html += `
     <div class="paso">
       <h3>✅ Conclusión</h3>
@@ -141,7 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cont.innerHTML = html;
 
-  // ---------- helpers ----------
   function formatBinGroups(bin32) {
     if (!bin32) return '';
     const b = bin32.padStart(32, '0');

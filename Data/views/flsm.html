@@ -19,27 +19,22 @@
     <label for="cantidad">Cantidad de subredes:</label>
     <input type="number" id="cantidad" placeholder="Ej: 4" min="1">
 
-    <!-- Resultados se generan aquí -->
     <div id="flsmResultados" style="margin-top:16px;"></div>
 
-    <!-- Botones -->
     <button type="button" onclick="calcularFLSM()">CALCULAR</button>
     <button type="button" onclick="verExplicacion()">📖 Ver explicación paso a paso</button>
 
-    <!-- Botón PDF (se muestra después de calcular) -->
     <button id="btn-pdf" style="display:none; margin-top:12px;">⬇ Descargar PDF</button>
   </section>
 
   <a href="../Index.html" class="boton">Volver</a>
 
-  <!-- Librerías para PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <!-- Script de cálculo -->
+ 
   <script src="../JS/FLSM.js"></script>
 
-  <!-- Función para ir a la explicación -->
   <script>
     function verExplicacion() {
       const raw = localStorage.getItem("flsmDatos");
