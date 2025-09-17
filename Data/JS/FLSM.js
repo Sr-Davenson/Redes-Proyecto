@@ -2,18 +2,47 @@ document.addEventListener("DOMContentLoaded", () => {
   const ipInput = document.getElementById("ip");
   const prefijoInput = document.getElementById("prefijo");
 
-  ipInput.addEventListener("input", () => {
-    const ip = ipInput.value.trim();
-    if (!validarIP(ip)) return;
+  if (ipInput && prefijoInput) {
+    ipInput.addEventListener("blur", () => {
+      const ip = ipInput.value.trim();
+      if (!validarIP(ip)) return;
 
-    const clase = obtenerClase(ip);
-    let cidr = 24;
-    if (clase === "A") cidr = 8;
-    else if (clase === "B") cidr = 16;
-    else if (clase === "C") cidr = 24;
+      const clase = obtenerClase(ip);
+      let prefijoSugerido = 24; 
 
-    prefijoInput.value = cidr;
-  });
+      if (clase === "A") prefijoSugerido = 8;
+      else if (clase === "B") prefijoSugerido = 16;
+      else if (clase === "C") prefijoSugerido = 24;
+
+      prefijoInput.value = prefijoSugerido;
+      console.debug(`Prefijo sugerido para clase ${clase}: /${prefijoSugerido}`);
+    });
+  }
+
+  const btnPdf = document.getElementById("btn-pdf");
+  if (btnPdf) {
+    btnPdf.addEventListener("click", () => {
+      const { jsPDF } = window.jspdf;
+      const resultados = document.getElementById("flsmResultados");
+
+      if (!resultados || resultados.innerHTML.trim() === "") {
+        alert("⚠️ Primero calcula para generar resultados.");
+        return;
+      }
+
+      html2canvas(resultados, { scale: 2 }).then(canvas => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const imgWidth = pageWidth - 20;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+        pdf.save("resultado_FLSM.pdf");
+      });
+    });
+  }
 });
 
 function validarIP(ip) {
@@ -153,35 +182,8 @@ function calcularFLSM() {
   };
   localStorage.setItem("flsmDatos", JSON.stringify(flsmDatos));
 
+  const btnExp = document.getElementById("btn-explicacion");
   const btnPdf = document.getElementById("btn-pdf");
-  if (btnPdf) {
-    btnPdf.style.display = "inline-block";
-  }
+  if (btnExp) btnExp.style.display = "inline-block";
+  if (btnPdf) btnPdf.style.display = "inline-block";
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  const btnPdf = document.getElementById("btn-pdf");
-  if (!btnPdf) return;
-
-  btnPdf.addEventListener("click", () => {
-    const { jsPDF } = window.jspdf;
-    const resultados = document.getElementById("flsmResultados");
-
-    if (!resultados || resultados.innerHTML.trim() === "") {
-      alert("Primero calcula para generar resultados.");
-      return;
-    }
-
-    html2canvas(resultados, { scale: 2 }).then(canvas => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const imgWidth = pageWidth - 20;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-      pdf.save("resultado_FLSM.pdf");
-    });
-  });
-});
